@@ -5,7 +5,13 @@ configurações da maquina tal como MPK e graduação e as informações sobre o
 que o funcionario possa alterar as informações.
 
  Requisitos:
+
+
 registro de fichas tecnicas
+
 registro de insumos 
+
 registro de descrição
+
 alteração de descrição
+
