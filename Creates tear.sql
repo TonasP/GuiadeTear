@@ -1,31 +1,49 @@
+
+
 -- SCHEMA: tear
 
 -- DROP SCHEMA IF EXISTS tear ;
 
 CREATE SCHEMA IF NOT EXISTS tear
     AUTHORIZATION postgres;
+
+
+-- Table: tear.concluidos
+
+-- DROP TABLE IF EXISTS tear.concluidos;
+
 CREATE TABLE IF NOT EXISTS tear.concluidos
 (
     "codProjeto" integer NOT NULL,
     quantidade text COLLATE pg_catalog."default" NOT NULL,
     "dataConclusao" date NOT NULL,
-    CONSTRAINT concluidos_pkey PRIMARY KEY ("codProjeto")
+    CONSTRAINT concluidos_pkey PRIMARY KEY ("codProjeto"),
+    CONSTRAINT fk_concluidos FOREIGN KEY ("codProjeto")
+        REFERENCES tear.fichas ("codigoProjeto") MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+        NOT VALID
 )
 
 TABLESPACE pg_default;
 
 ALTER TABLE IF EXISTS tear.concluidos
     OWNER to postgres;
--- Index: fki_fk_conclusao
+-- Index: fki_fk_concluidos
 
--- DROP INDEX IF EXISTS .fki_fk_conclusao;
+-- DROP INDEX IF EXISTS tear.fki_fk_concluidos;
 
-CREATE INDEX IF NOT EXISTS fki_fk_conclusao
+CREATE INDEX IF NOT EXISTS fki_fk_concluidos
     ON tear.concluidos USING btree
     ("codProjeto" ASC NULLS LAST)
     TABLESPACE pg_default;
--------------
---tabela descricao
+
+
+
+    -- Table: tear.descricao
+
+-- DROP TABLE IF EXISTS tear.descricao;
+
 CREATE TABLE IF NOT EXISTS tear.descricao
 (
     "codProjeto" integer NOT NULL,
@@ -39,32 +57,21 @@ CREATE TABLE IF NOT EXISTS tear.descricao
         REFERENCES tear.fichas ("codigoProjeto") MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION
-        NOT VALID
 )
 
 TABLESPACE pg_default;
 
 ALTER TABLE IF EXISTS tear.descricao
     OWNER to postgres;
--- Index: fki_fk_concluidos
 
--- DROP INDEX IF EXISTS tear.fki_fk_concluidos;
 
-CREATE INDEX IF NOT EXISTS fki_fk_concluidos
-    ON tear.descricao USING btree
-    ("codProjeto" ASC NULLS LAST)
-    TABLESPACE pg_default;
--- Index: fki_fk_ficha
 
--- DROP INDEX IF EXISTS tear.fki_fk_ficha;
 
-CREATE INDEX IF NOT EXISTS fki_fk_ficha
-    ON tear.descricao USING btree
-    ("codProjeto" ASC NULLS LAST)
-    TABLESPACE pg_default;    
-    ------------------------
-    --tabela fichas 
-    CREATE TABLE IF NOT EXISTS tear.fichas
+    -- Table: tear.fichas
+
+-- DROP TABLE IF EXISTS tear.fichas;
+
+CREATE TABLE IF NOT EXISTS tear.fichas
 (
     "codigoProjeto" integer NOT NULL,
     "tipoLinha1" text COLLATE pg_catalog."default" NOT NULL,
@@ -88,17 +95,14 @@ TABLESPACE pg_default;
 
 ALTER TABLE IF EXISTS tear.fichas
     OWNER to postgres;
--- Index: fki_fk_codigo
 
--- DROP INDEX IF EXISTS tear.fki_fk_codigo;
 
-CREATE INDEX IF NOT EXISTS fki_fk_codigo
-    ON tear.fichas USING btree
-    ("codigoProjeto" ASC NULLS LAST)
-    TABLESPACE pg_default;
-    ------------------------
-    --tabela insumos
-    CREATE TABLE IF NOT EXISTS Tear.insumos
+
+    -- Table: tear.insumos
+
+-- DROP TABLE IF EXISTS tear.insumos;
+
+CREATE TABLE IF NOT EXISTS tear.insumos
 (
     "tipoLinha" text COLLATE pg_catalog."default" NOT NULL,
     cor text COLLATE pg_catalog."default" NOT NULL,
@@ -112,3 +116,6 @@ TABLESPACE pg_default;
 
 ALTER TABLE IF EXISTS tear.insumos
     OWNER to postgres;
+
+
+
