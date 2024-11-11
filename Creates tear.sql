@@ -1,3 +1,9 @@
+-- SCHEMA: tear
+
+-- DROP SCHEMA IF EXISTS tear ;
+
+CREATE SCHEMA IF NOT EXISTS tear
+    AUTHORIZATION postgres;
 CREATE TABLE IF NOT EXISTS tear.concluidos
 (
     "codProjeto" integer NOT NULL,
